@@ -1,0 +1,40 @@
+# Environnements et secrets
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+*.pem
+*.key
+*.crt
+
+# Python / Backend
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Logs, fichiers temporaires et exports personnels
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+*.pdf
+
+# Exclure les CSV privés / exports financiers (conserver uniquement le fichier exemple)
+*.csv
+!data/transactions.example.csv

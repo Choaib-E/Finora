@@ -1,0 +1,9 @@
+Id,date,montant,categorie,type,description
+U001,2026-01-01,250.50,Alimentation,depense,Courses Carrefour
+U002,2026-01-02,150.00,Transport,depense,Taxi Casablanca
+U001,2026-01-03,5000.00,Salaire,revenu,Salaire mensuel
+U001,2026-01-05,1200.00,Logement,depense,Loyer appartement
+U002,2026-01-06,6500.00,Salaire,revenu,Salaire janvier
+U001,2026-01-10,180.00,Factures & Télécoms,depense,Forfait fibre Maroc Telecom
+U002,2026-01-12,320.00,Alimentation,depense,Courses Marjane
+U001,2026-01-15,900.00,Freelance,revenu,Mission développement web
