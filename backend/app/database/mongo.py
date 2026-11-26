@@ -1,11 +1,15 @@
 """Connexion MongoDB et accès sécurisé aux 4 collections existantes de choaib."""
 
+import os
 from typing import Optional
+from dotenv import load_dotenv
 from pymongo import ASCENDING, DESCENDING, MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 
 from app.core.config import get_settings
+
+load_dotenv()
 
 COLLECTION_UTILISATEURS = "utilisateurs"
 COLLECTION_TRANSACTIONS = "transactions"
@@ -20,6 +24,12 @@ EXPECTED_COLLECTIONS = (
 )
 
 
+def get_mongo_uri() -> str:
+    """Résout l'URI MongoDB depuis MONGO_URI (ou MONGODB_URI), avec repli local par défaut."""
+    settings = get_settings()
+    return os.getenv("MONGO_URI") or os.getenv("MONGODB_URI") or settings.MONGO_URI
+
+
 class MongoManager:
     """Gestionnaire singleton de la connexion PyMongo vers la base existante."""
 
@@ -30,9 +40,11 @@ class MongoManager:
         if self.db is not None:
             return self.db
         settings = get_settings()
-        self.client = MongoClient(settings.MONGODB_URI, serverSelectionTimeoutMS=5000)
+        mongo_uri = get_mongo_uri()
+        db_name = os.getenv("MONGO_DATABASE") or os.getenv("MONGODB_DATABASE") or settings.MONGODB_DATABASE or "choaib"
+        self.client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
         self.client.admin.command("ping")
-        self.db = self.client[settings.MONGODB_DATABASE]
+        self.db = self.client[db_name]
         self.ensure_indexes(self.db)
         return self.db
 

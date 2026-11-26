@@ -149,7 +149,7 @@ Application accessible sur : `http://localhost:5173`
 
 | Variable | Description | Exemple |
 | --- | --- | --- |
-| `MONGODB_URI` | URI MongoDB locale ou MongoDB Atlas (`mongodb+srv://...`) | `mongodb://localhost:27017/` |
+| `MONGO_URI` | URI MongoDB locale ou MongoDB Atlas (`mongodb+srv://...`) | `mongodb://localhost:27017/` |
 | `MONGODB_DATABASE` | Nom de la base de données MongoDB | `choaib` |
 | `JWT_SECRET` | Clé secrète HMAC-SHA256 (32+ caractères aléatoires en prod) | `changez_moi_avec_une_cle_longue` |
 | `JWT_ALGORITHM` | Algorithme de signature JWT | `HS256` |
@@ -186,7 +186,7 @@ npm run build
 
 ### 2. Backend (Render)
 1. Connectez votre repository GitHub `https://github.com/Choaib-E/Finora` sur **Render** (le fichier `render.yaml` est déjà prêt).
-2. Configurez les variables d'environnement : `MONGODB_URI`, `MONGODB_DATABASE=choaib`, `JWT_SECRET`, et `CORS_ORIGINS` avec l'URL finale de votre frontend Vercel.
+2. Configurez les variables d'environnement : `MONGO_URI`, `MONGODB_DATABASE=choaib`, `JWT_SECRET`, et `CORS_ORIGINS` avec l'URL finale de votre frontend Vercel.
 3. Vérifiez l'état de santé via `GET /api/health`.
 
 ### 3. Frontend (Vercel)

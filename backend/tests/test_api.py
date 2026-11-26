@@ -256,3 +256,13 @@ def test_reports_and_exports(client):
     assert pdf_export.status_code == 200
     assert pdf_export.headers["content-type"] == "application/pdf"
     assert pdf_export.content.startswith(b"%PDF")
+
+
+def test_mongo_uri_env_override(monkeypatch):
+    from app.core.config import get_settings
+    from app.database.mongo import get_mongo_uri
+
+    get_settings.cache_clear()
+    monkeypatch.setenv("MONGO_URI", "mongodb+srv://user:pass@cluster.example.mongodb.net/?retryWrites=true")
+    assert get_mongo_uri() == "mongodb+srv://user:pass@cluster.example.mongodb.net/?retryWrites=true"
+    get_settings.cache_clear()
