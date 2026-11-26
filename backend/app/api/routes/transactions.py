@@ -58,7 +58,11 @@ def create_transaction(
     current_user: Dict[str, Any] = Depends(get_current_user),
     db: Database = Depends(get_db),
 ) -> TransactionResponse:
-    return TransactionService(db).create_transaction(current_user["_id"], payload)
+    return TransactionService(db).create_transaction(
+        user_oid=current_user["_id"],
+        payload=payload,
+        nom_utilisateur=str(current_user.get("name", "")),
+    )
 
 
 @router.get("/{transaction_id}", response_model=TransactionResponse, summary="Consulter une transaction")

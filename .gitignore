@@ -35,6 +35,11 @@ build/
 Thumbs.db
 *.pdf
 
+# Sauvegardes MongoDB locales (BSON / métadonnées)
+backups/
+*.bson
+*.archive
+
 # Exclure les CSV privés / exports financiers (conserver uniquement le fichier exemple)
 *.csv
 !data/transactions.example.csv

@@ -8,6 +8,7 @@ from pymongo.database import Database
 
 from app.core.exceptions import BadRequestException, NotFoundException
 from app.repositories.transaction_repository import TransactionRepository
+from app.repositories.user_repository import UserRepository
 from app.schemas.transaction import (
     TransactionCreateRequest,
     TransactionListResponse,
@@ -29,6 +30,7 @@ def serialize_transaction(doc: Dict[str, Any]) -> TransactionResponse:
     return TransactionResponse(
         id=str(doc["_id"]),
         user_id=str(doc["user_id"]),
+        nom_utilisateur=doc.get("nom_utilisateur"),
         date=doc["date"],
         montant=round(float(doc["montant"]), 2),
         categorie=doc["categorie"],
@@ -41,6 +43,7 @@ def serialize_transaction(doc: Dict[str, Any]) -> TransactionResponse:
 class TransactionService:
     def __init__(self, db: Database):
         self.repo = TransactionRepository(db)
+        self.user_repo = UserRepository(db)
 
     def list_transactions(
         self,
@@ -91,9 +94,20 @@ class TransactionService:
             raise NotFoundException("Transaction introuvable.")
         return serialize_transaction(doc)
 
-    def create_transaction(self, user_oid: ObjectId, payload: TransactionCreateRequest) -> TransactionResponse:
+    def create_transaction(
+        self,
+        user_oid: ObjectId,
+        payload: TransactionCreateRequest,
+        nom_utilisateur: Optional[str] = None,
+    ) -> TransactionResponse:
+        resolved_name = nom_utilisateur.strip() if nom_utilisateur is not None else ""
+        if not resolved_name:
+            user_doc = self.user_repo.find_by_id(user_oid)
+            resolved_name = str(user_doc.get("name", "")).strip() if user_doc else ""
+
         doc = self.repo.create(
             user_oid=user_oid,
+            nom_utilisateur=resolved_name,
             tx_date=_date_to_utc_start(payload.date),
             montant=payload.montant,
             categorie=payload.categorie,

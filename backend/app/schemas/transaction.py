@@ -77,6 +77,7 @@ class TransactionUpdateRequest(BaseModel):
 class TransactionResponse(BaseModel):
     id: str
     user_id: str
+    nom_utilisateur: Optional[str] = None
     date: dt.datetime
     montant: float
     categorie: str

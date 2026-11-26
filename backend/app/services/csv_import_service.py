@@ -218,6 +218,7 @@ class CsvImportService:
                 categorie=categorie,
                 tx_type=tx_type,
                 description=description,
+                nom_utilisateur=str(target_user.get("name", "")).strip(),
             )
             imported_count += 1
             imported_by_user[user_code] += 1

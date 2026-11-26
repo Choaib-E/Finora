@@ -147,9 +147,11 @@ class TransactionRepository:
         categorie: str,
         tx_type: str,
         description: str,
+        nom_utilisateur: str = "",
     ) -> Dict[str, Any]:
         doc: Dict[str, Any] = {
             "user_id": user_oid,
+            "nom_utilisateur": nom_utilisateur.strip(),
             "date": tx_date,
             "montant": round(float(montant), 2),
             "categorie": categorie.strip(),
